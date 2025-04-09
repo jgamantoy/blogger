@@ -16,12 +16,12 @@ class UserController extends Controller
         return User::all();
     }
 
-    public function find(Request $request)
+    public function find(Request $request): User|RedirectResponse
     {
-        return $request->user();
+        return $request->user() ?? redirect('/');
     }
 
-    public function store(UserRequest $request)
+    public function store(UserRequest $request): RedirectResponse
     {
         User::create([
             'name' => 'Jozi',
@@ -32,14 +32,21 @@ class UserController extends Controller
         return redirect('/users');
     }
 
-    public function authenticate(Request $request)
+    public function flush(Request $request): string
+    {
+        $request->session()->flush();
+
+        return 'Session Flushed!';
+    }
+
+    public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->only(['email', 'password']);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect('/user');
+            return redirect('/home');
         }
 
         return back()->withErrors([

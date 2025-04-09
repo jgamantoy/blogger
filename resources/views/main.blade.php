@@ -1,3 +1,8 @@
+<?php
+  if (!auth()->user()) {
+    redirect('/');
+  }
+?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
   <head>
@@ -10,12 +15,22 @@
   </head>
   <body>
   <nav class="navbar bg-gray-800 px-5 text-gray-400 h-[35px] flex items-center">
-  <a
-      href="#"
-      class=""
-  >
-      Log in
-  </a>
+  @if (!auth()->user())
+      <a
+          href="{{ route('login') }}"
+          class="inline-block px-5 py-1.5 text-white"
+      >
+          Log in
+      </a>
+
+      @if (Route::has('register'))
+          <a
+              href="{{ route('register') }}"
+              class="inline-block px-5 py-1.5 text-white">
+              Register
+          </a>
+      @endif
+  @endif
   </nav>
       <div class="content flex items-center">
         @yield('content')

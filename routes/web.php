@@ -5,14 +5,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\UserController;
 
+use App\Http\Middleware\LoggedIn;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('home');
+})->name('welcome');
 
-Route::view('register', 'register');
+Route::view('register', 'register')->name('register');
+Route::view('login', 'login')->name('login');
+Route::view('create', 'create')->name('create');
 
-Route::view('login', 'login');
+Route::view('home', 'home')->middleware('auth');
 
 Route::controller(UserController::class)->group(function() {
     Route::post('register', 'store')->name('user.store');
@@ -20,11 +23,15 @@ Route::controller(UserController::class)->group(function() {
     
     Route::get('user', 'find');
     Route::get('users', 'index');
+    Route::get('user/flush', 'flush');
 });
 
 Route::group([
     'prefix' => 'blog',
     'controller' => BlogController::class
 ], function() {
-    Route::get('create', 'store')->name('blog.store');
+    Route::post('', 'store')->name('blog.store');
+    Route::delete('{id}', 'destroy')->name('blog.delete');
+    Route::get('{id}', 'find');
+    Route::put('{id}', 'edit')->name('blog.edit');
 });

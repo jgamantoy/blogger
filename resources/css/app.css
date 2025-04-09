@@ -18,6 +18,7 @@ h1 {
 input {
     border: 1px solid black;
     border-radius: 5px;
+    padding: 2.5px 5px;
 }
 
 .register {

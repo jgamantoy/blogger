@@ -18,7 +18,8 @@ class Blog extends Model
     protected $fillable = [
         'title',
         'content',
-       'user_id'
+        'user_id',
+        'publish'
     ];
 
     public function user(): BelongsTo

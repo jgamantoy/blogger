@@ -15,11 +15,12 @@ class BlogController extends Controller
     public function store(CreateBlogRequest $request): RedirectResponse
     {
         $user = auth()->user();
-
+        dd($request->all());
         Blog::create([
             'title' => $request->title,
             'content' => $request->content,
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'publish' => $request->publish
         ]);
 
         return redirect('/home');
@@ -30,7 +31,7 @@ class BlogController extends Controller
         $blog = Blog::find($id);
         $blog->delete();
 
-        return redirect('home');
+        return back();
     }
 
     public function find(Request $request, int $id): View
@@ -40,13 +41,14 @@ class BlogController extends Controller
         return view('create', ['blog' => $blog]);
     }
 
-        public function edit(Request $request, int $id): RedirectResponse
+        public function edit(CreateBlogRequest $request, int $id): RedirectResponse
     {
         $blog = Blog::findOrFail($id);
 
         $blog->update([
             'title' => $request->title,
-            'content' => $request->content
+            'content' => $request->content,
+            'publish' => $request->publish
         ]);
 
         return redirect('home');

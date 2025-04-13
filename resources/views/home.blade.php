@@ -12,6 +12,9 @@
     @foreach($user->blogs as $blog)
       <div class="mb-3 flex items-center">
         <span class="mr-2">{{ $blog->title }}</span>
+        @if(!$blog->publish)
+          <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">draft</span>
+        @endif
         <form action="{{ route('blog.delete', $blog->id) }}" method="POST">
           @csrf
           @method('delete')

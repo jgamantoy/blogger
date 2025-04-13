@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->string('title');
             $table->mediumText('content');
+            $table->boolean('publish')->default(1);
             $table->timestamps();
             $table->softDeletes();
 

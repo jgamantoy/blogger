@@ -29,7 +29,7 @@ class UserController extends Controller
             'password' => bcrypt($request->password)
         ]);
 
-        return redirect('/users');
+        return redirect('/login');
     }
 
     public function flush(Request $request): string

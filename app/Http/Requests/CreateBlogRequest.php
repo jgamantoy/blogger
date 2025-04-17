@@ -25,7 +25,8 @@ class CreateBlogRequest extends FormRequest
     {
         return [
             'title' => 'required|string|min:1|max:24',
-            'content' => 'required|string|min:1|max:24'
+            'content' => 'required|string|min:1|max:24',
+            'banner' => 'nullable|mimes:jpeg,png'
         ];
     }
 

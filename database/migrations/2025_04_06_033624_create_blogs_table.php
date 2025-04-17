@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('title');
+            $table->string('banner')->nullable();
             $table->mediumText('content');
             $table->boolean('publish')->default(1);
             $table->timestamps();

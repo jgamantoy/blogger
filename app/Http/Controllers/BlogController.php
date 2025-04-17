@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\Blog;
 
@@ -15,15 +16,23 @@ class BlogController extends Controller
     public function store(CreateBlogRequest $request): RedirectResponse
     {
         $user = auth()->user();
-        dd($request->all());
-        Blog::create([
+
+        $data = [
             'title' => $request->title,
             'content' => $request->content,
             'user_id' => $user->id,
             'publish' => $request->publish
-        ]);
+        ];
 
-        return redirect('/home');
+        if ($request->hasFile('banner')) {
+            $file_name = str_replace(' ', '_', $request->file('banner')->getClientOriginalName());
+            $request->file('banner')->storeAs('banner', $file_name, 'public');
+            $data['banner'] = asset('banner/'. $file_name);
+        }
+
+        Blog::create($data);
+
+        return redirect('home');
     }
 
     public function destroy(Request $request, $id): RedirectResponse
@@ -45,11 +54,19 @@ class BlogController extends Controller
     {
         $blog = Blog::findOrFail($id);
 
-        $blog->update([
+        $data = [
             'title' => $request->title,
             'content' => $request->content,
             'publish' => $request->publish
-        ]);
+        ];
+
+        if ($request->hasFile('banner')) {
+            $file_name = str_replace(' ', '_', $request->file('banner')->getClientOriginalName());
+            $request->file('banner')->storeAs('banner', $file_name, 'public');
+            $data['banner'] = asset('banner/'. $file_name);
+        }
+
+        $blog->update($data);
 
         return redirect('home');
     }

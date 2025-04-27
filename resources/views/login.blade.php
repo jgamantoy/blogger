@@ -1,6 +1,15 @@
 @extends('main')
 @section('content')
+<?php
+?>
 <div class="register">
+  @if ($errors->any() && $errors->default)
+    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+      @foreach($errors->all() as $error)
+        <span class="font-medium">{{ $error }}</span>
+      @endforeach
+    </div>
+  @endif
   <h1>Login</h1>
   <form action="{{ route('user.authenticate') }}" method="post">
     @csrf
@@ -17,7 +26,6 @@
         Submit
       </button>
     </div>
-    
   </form>
 </div>
 @endsection

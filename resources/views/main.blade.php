@@ -30,6 +30,13 @@
               Register
           </a>
       @endif
+  @else
+      <a
+          href="{{ route('user.logout') }}"
+          class="inline-block px-5 py-1.5 text-white"
+      >
+          Log Out
+      </a>
   @endif
   </nav>
       <div class="content flex items-center">

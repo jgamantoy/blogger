@@ -1,8 +1,9 @@
 @extends('main')
 @section('content')
+<?php
+?>
 <div class="register">
   @if ($errors->any())
-
     @include('components.error_pop_up', ["errors" => $errors])
   @endif
   <h1>Login</h1>

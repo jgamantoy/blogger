@@ -32,6 +32,7 @@ Route::group([
 ], function() {
     Route::post('', 'store')->name('blog.store');
     Route::delete('{id}', 'destroy')->name('blog.delete');
-    Route::get('{id}', 'find');
+    Route::get('{id}', 'view')->name('blog.view');
+    Route::get('edit/{id}', 'find');
     Route::put('{id}', 'edit')->name('blog.edit');
 });

@@ -25,7 +25,7 @@
     <button>Submit</button>
   </form>
   @if ($errors->any())
-    <p>There is an error</p>
+    @include('components.error_pop_up', ["errors" => $errors])
   @endif
 </div>
 @endsection()

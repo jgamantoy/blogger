@@ -50,7 +50,14 @@ class BlogController extends Controller
         return view('create', ['blog' => $blog]);
     }
 
-        public function edit(CreateBlogRequest $request, int $id): RedirectResponse
+    public function view(Request $request, int $id): View 
+    {
+        $blog = Blog::findOrFail($id);
+
+        return view('view', ['blog' => $blog]);
+    }
+
+    public function edit(CreateBlogRequest $request, int $id): RedirectResponse
     {
         $blog = Blog::findOrFail($id);
 
